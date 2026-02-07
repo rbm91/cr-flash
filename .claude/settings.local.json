@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install)",
+      "Bash(dir:*)",
+      "Bash(powershell -Command:*)",
+      "Bash(npm run db:migrate:*)",
+      "Bash(npm run db:seed:*)",
+      "Bash(npm run dev:server:*)",
+      "Bash(curl:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run dev:*)",
+      "Bash(npm run build:*)",
+      "Bash(npx vercel:*)",
+      "Bash(npx supabase:*)",
+      "Bash(node scripts/setup-db.mjs:*)",
+      "Bash(set \"SUPABASE_URL=https://skarlvpenwoasndirhqh.supabase.co\")",
+      "Bash(set \"SUPABASE_SERVICE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNrYXJsdnBlbndvYXNuZGlyaHFoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2ODU2NDU4MCwiZXhwIjoyMDg0MTQwNTgwfQ.mHBSLz1s7smlTRCyElVQ-s7REgjMBwf0lXgIfQ8BdbY\")",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}
