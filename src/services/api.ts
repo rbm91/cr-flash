@@ -29,56 +29,56 @@ async function request<T>(url: string, options: RequestInit = {}): Promise<T> {
 
 export const authApi = {
   login: (email: string, password: string) =>
-    request<{ token: string; user: any }>('/api/auth/login', {
+    request<{ token: string; user: any }>('/api/auth?action=login', {
       method: 'POST',
       body: JSON.stringify({ email, password }),
     }),
-  me: () => request<any>('/api/auth/me'),
+  me: () => request<any>('/api/auth?action=me'),
 };
 
 export const reportsApi = {
   getAll: () => request<any[]>('/api/reports'),
-  getById: (id: number) => request<any>(`/api/reports/${id}`),
+  getById: (id: number) => request<any>(`/api/reports?id=${id}`),
   create: (data: any) =>
     request<any>('/api/reports', { method: 'POST', body: JSON.stringify(data) }),
   update: (id: number, data: any) =>
-    request<any>(`/api/reports/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+    request<any>(`/api/reports?id=${id}`, { method: 'PUT', body: JSON.stringify(data) }),
   submit: (id: number) =>
-    request<any>(`/api/reports/${id}/submit`, { method: 'POST' }),
-  getHistory: (id: number) => request<any[]>(`/api/reports/${id}/history`),
+    request<any>(`/api/reports?id=${id}&action=submit`, { method: 'POST' }),
+  getHistory: (id: number) => request<any[]>(`/api/reports?id=${id}&action=history`),
 };
 
 export const configApi = {
-  getGtCommissions: () => request<any[]>('/api/config/gt-commissions'),
-  getManagers: () => request<any[]>('/api/config/managers'),
+  getGtCommissions: () => request<any[]>('/api/config?type=gt-commissions'),
+  getManagers: () => request<any[]>('/api/config?type=managers'),
 };
 
 export const adminApi = {
-  getGtCommissions: () => request<any[]>('/api/admin/gt-commissions'),
+  getGtCommissions: () => request<any[]>('/api/admin?type=gt-commissions'),
   createGtCommission: (name: string) =>
-    request<any>('/api/admin/gt-commissions', {
+    request<any>('/api/admin?type=gt-commissions', {
       method: 'POST',
       body: JSON.stringify({ name }),
     }),
   updateGtCommission: (id: number, name: string) =>
-    request<any>('/api/admin/gt-commissions', {
+    request<any>('/api/admin?type=gt-commissions', {
       method: 'PUT',
       body: JSON.stringify({ id, name }),
     }),
   deleteGtCommission: (id: number) =>
-    request<any>(`/api/admin/gt-commissions?id=${id}`, { method: 'DELETE' }),
+    request<any>(`/api/admin?type=gt-commissions&id=${id}`, { method: 'DELETE' }),
 
-  getManagers: () => request<any[]>('/api/admin/managers'),
+  getManagers: () => request<any[]>('/api/admin?type=managers'),
   createManager: (name: string, email: string) =>
-    request<any>('/api/admin/managers', {
+    request<any>('/api/admin?type=managers', {
       method: 'POST',
       body: JSON.stringify({ name, email }),
     }),
   updateManager: (id: number, name: string, email: string) =>
-    request<any>('/api/admin/managers', {
+    request<any>('/api/admin?type=managers', {
       method: 'PUT',
       body: JSON.stringify({ id, name, email }),
     }),
   deleteManager: (id: number) =>
-    request<any>(`/api/admin/managers?id=${id}`, { method: 'DELETE' }),
+    request<any>(`/api/admin?type=managers&id=${id}`, { method: 'DELETE' }),
 };
