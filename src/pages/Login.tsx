@@ -54,11 +54,6 @@ export default function Login({ onLogin }: LoginProps) {
             {loading ? 'Connexion...' : 'Se connecter'}
           </button>
         </form>
-        <div className="mt-6 p-4 bg-gray-50 rounded-lg text-xs text-gray-500">
-          <p className="font-semibold mb-1">Comptes de test :</p>
-          <p>Admin : admin@crflash.fr / admin123</p>
-          <p>Manager : marie.dupont@crflash.fr / manager123</p>
-        </div>
       </div>
     </div>
   );
