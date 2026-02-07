@@ -5,16 +5,14 @@ export default async function handler(_req: VercelRequest, res: VercelResponse) 
 
   try {
     const bcrypt = await import('bcryptjs');
-    const fn = bcrypt.default?.compareSync || (bcrypt as any).compareSync;
-    checks.bcryptjs = fn ? 'OK' : 'FAIL - no compareSync';
+    checks.bcryptjs = 'OK - keys: ' + Object.keys(bcrypt).join(',');
   } catch (e: any) {
     checks.bcryptjs = 'FAIL - ' + e.message;
   }
 
   try {
     const jwt = await import('jsonwebtoken');
-    const fn = jwt.default?.sign || (jwt as any).sign;
-    checks.jsonwebtoken = fn ? 'OK' : 'FAIL - no sign';
+    checks.jsonwebtoken = 'OK - keys: ' + Object.keys(jwt).join(',');
   } catch (e: any) {
     checks.jsonwebtoken = 'FAIL - ' + e.message;
   }
