@@ -3,8 +3,13 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-const SUPABASE_URL = 'https://skarlvpenwoasndirhqh.supabase.co';
-const SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNrYXJsdnBlbndvYXNuZGlyaHFoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2ODU2NDU4MCwiZXhwIjoyMDg0MTQwNTgwfQ.mHBSLz1s7smlTRCyElVQ-s7REgjMBwf0lXgIfQ8BdbY';
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+
+if (!SUPABASE_URL || !SERVICE_KEY) {
+  console.error('SUPABASE_URL and SUPABASE_SERVICE_KEY env vars are required. Set them in .env');
+  process.exit(1);
+}
 
 const supabase = createClient(SUPABASE_URL, SERVICE_KEY, {
   db: { schema: 'public' }
@@ -14,14 +19,14 @@ const supabase = createClient(SUPABASE_URL, SERVICE_KEY, {
 // puis les creer via l'API Supabase Management
 
 // Approche : utiliser le endpoint SQL de Supabase via fetch direct au pooler
-const DB_URL = `https://skarlvpenwoasndirhqh.supabase.co/rest/v1/`;
+const DB_URL = `${SUPABASE_URL}/rest/v1/`;
 
 async function executeSQL(sql) {
   // Supabase ne permet pas d'executer du SQL brut via l'API REST
   // Mais on peut utiliser le hook pg_net ou creer une function RPC
   // Alternative : on verifie si les tables existent et on les cree via l'admin API
 
-  const response = await fetch(`https://skarlvpenwoasndirhqh.supabase.co/pg/query`, {
+  const response = await fetch(`${SUPABASE_URL}/pg/query`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -3,6 +3,5 @@ dist
 .env
 .env.local
 .vercel
+.claude/
 nul
-
-.vercel
