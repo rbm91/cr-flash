@@ -22,7 +22,11 @@
       "Bash(gh repo create:*)",
       "Bash(git push)",
       "Bash(npx vite:*)",
-      "Bash(git mv:*)"
+      "Bash(git mv:*)",
+      "Bash(TOKEN=\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBjcmZsYXNoLmZyIiwicm9sZSI6ImFkbWluIiwibmFtZSI6IkFkbWluIFByaW5jaXBhbCIsImlhdCI6MTc3MDQ5NzcxMywiZXhwIjoxNzcwNTg0MTEzfQ.5qyGL-O1mKDrcpOkPesLXx3XffFIRZQdaI1N_hfcT5o\":*)",
+      "Bash(python:*)",
+      "Bash(node -e:*)",
+      "Bash(node:*)"
     ]
   }
 }
