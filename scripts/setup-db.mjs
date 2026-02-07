@@ -21,7 +21,7 @@ try {
   }
 } catch {}
 
-const SUPABASE_URL = process.env.SUPABASE_URL || 'https://skarlvpenwoasndirhqh.supabase.co';
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://hefjprpjgyltpuigrgpk.supabase.co';
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
 
 if (!SUPABASE_SERVICE_KEY) {

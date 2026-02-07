@@ -1,5 +1,5 @@
--- Tables CR Flash dans Supabase (prefixees cr_ pour pas polluer le projet Assurissom)
--- Executer dans SQL Editor de Supabase
+-- Tables CR Flash dans Supabase (prefixees cr_ pour cohabiter avec les autres tables)
+-- Executer dans SQL Editor de Supabase : https://supabase.com/dashboard/project/hefjprpjgyltpuigrgpk/sql
 
 CREATE TABLE IF NOT EXISTS cr_users (
   id SERIAL PRIMARY KEY,
@@ -53,12 +53,20 @@ CREATE INDEX IF NOT EXISTS idx_cr_reports_user_id ON cr_reports(user_id);
 CREATE INDEX IF NOT EXISTS idx_cr_reports_status ON cr_reports(status);
 CREATE INDEX IF NOT EXISTS idx_cr_report_history_report_id ON cr_report_history(report_id);
 
--- RLS desactive pour ces tables (acces via service_role key cote serveur)
+-- RLS active mais service_role bypass automatiquement
 ALTER TABLE cr_users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE cr_reports ENABLE ROW LEVEL SECURITY;
 ALTER TABLE cr_report_history ENABLE ROW LEVEL SECURITY;
 ALTER TABLE cr_gt_commissions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE cr_managers ENABLE ROW LEVEL SECURITY;
 
--- Policies pour service_role (bypass RLS automatiquement)
--- Pas de policies anon pour securiser l'acces
+-- Grants pour que PostgREST (API REST Supabase) puisse voir ces tables
+GRANT ALL ON cr_users TO service_role;
+GRANT ALL ON cr_reports TO service_role;
+GRANT ALL ON cr_report_history TO service_role;
+GRANT ALL ON cr_gt_commissions TO service_role;
+GRANT ALL ON cr_managers TO service_role;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO service_role;
+
+-- Recharger le schema cache de PostgREST
+NOTIFY pgrst, 'reload schema';
