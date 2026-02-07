@@ -8,7 +8,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  const user = verifyToken(req);
+  const user = await verifyToken(req);
   if (!user) return res.status(401).json({ error: 'Non authentifie' });
   if (user.role !== 'admin') return res.status(403).json({ error: 'Acces reserve aux administrateurs' });
 

@@ -1,10 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import _bcrypt from 'bcryptjs';
 import { supabase } from './lib/supabase';
 import { signToken, verifyToken } from './lib/auth';
-
-// Handle ESM/CJS interop - bcryptjs is CJS
-const bcrypt = (_bcrypt as any).default || _bcrypt;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -12,7 +8,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  // Route: /api/auth?action=login or /api/auth?action=me
   const action = req.query.action as string;
 
   if (action === 'login' && req.method === 'POST') {
@@ -28,10 +23,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
       if (error || !user) return res.status(401).json({ error: 'Email ou mot de passe incorrect' });
 
+      const bcryptMod = await import('bcryptjs');
+      const bcrypt = (bcryptMod as any).default || bcryptMod;
       const isValid = bcrypt.compareSync(password, user.password);
       if (!isValid) return res.status(401).json({ error: 'Email ou mot de passe incorrect' });
 
-      const token = signToken({ id: user.id, email: user.email, role: user.role, name: user.name });
+      const token = await signToken({ id: user.id, email: user.email, role: user.role, name: user.name });
       return res.json({ token, user: { id: user.id, name: user.name, email: user.email, role: user.role } });
     } catch (err: any) {
       return res.status(500).json({ error: err.message });
@@ -39,7 +36,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   if (action === 'me' && req.method === 'GET') {
-    const user = verifyToken(req);
+    const user = await verifyToken(req);
     if (!user) return res.status(401).json({ error: 'Non authentifie' });
 
     const { data, error } = await supabase
