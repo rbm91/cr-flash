@@ -1,7 +1,10 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import bcrypt from 'bcryptjs';
+import _bcrypt from 'bcryptjs';
 import { supabase } from './lib/supabase';
 import { signToken, verifyToken } from './lib/auth';
+
+// Handle ESM/CJS interop - bcryptjs is CJS
+const bcrypt = (_bcrypt as any).default || _bcrypt;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*');

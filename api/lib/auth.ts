@@ -1,5 +1,8 @@
-import jwt from 'jsonwebtoken';
+import _jwt from 'jsonwebtoken';
 import type { VercelRequest } from '@vercel/node';
+
+// Handle ESM/CJS interop - jsonwebtoken is CJS
+const jwt = (_jwt as any).default || _jwt;
 
 const JWT_SECRET = process.env.JWT_SECRET || 'cr-flash-jwt-secret-dev';
 
